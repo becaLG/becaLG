@@ -8,18 +8,35 @@
         <div style="margin:15px;margin-top:100px">
             <van-button @click="tologout" round block color='#44BA80'>退出登录</van-button>
         </div>
-        <div>
-            啊实打实的
-        </div>
     </div>
 </template>
 
 <script>
-import NavBar from "../../components/common/NavBar/NavBar.vue"
+import NavBar from "../../components/common/NavBar/NavBar.vue";
+import { logout } from '../../components/network/user';
+import {Toast} from 'vant'; 
+import {useRouter} from 'vue-router';
 export default {
     name:"Profile",
     components:{
         NavBar
+    },
+    setup(){
+        const router = useRouter();
+        const tologout = () =>{
+            logout().then(res=>{
+                if(res.status == '204'){
+                    Toast.success('退出成功');
+                    window.localStorage.setItem('token','');
+                    setTimeout(()=>{
+                        router.push({path:'/login'});
+                    },500)
+                }
+            })
+        }
+        return {
+            tologout
+        }
     }
 }
 </script>
