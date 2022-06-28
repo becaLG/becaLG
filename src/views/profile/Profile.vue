@@ -6,7 +6,10 @@
         </nav-bar>
 
         <div style="margin:15px;margin-top:100px">
-            <van-button round block color='#44BA80'>退出登录</van-button>
+            <van-button @click="tologout" round block color='#44BA80'>退出登录</van-button>
+        </div>
+        <div>
+            啊实打实的
         </div>
     </div>
 </template>
