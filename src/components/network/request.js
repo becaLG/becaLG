@@ -1,5 +1,6 @@
+import router from "@/router";
 import axios from "axios";
-import { Notify } from 'vant';
+import { Notify, Toast } from 'vant';
 
 export function request(config){
     const instance = axios.create({
@@ -24,6 +25,10 @@ export function request(config){
         // console.log(res)
         return res.data ? res.data : res;
     },err=>{
+        if(err.response.status == '401'){
+            Toast.fail('请先登录');
+            router.push({path:'/login'});
+        }
         Notify(err.response.data.errors[Object.keys(err.response.data.errors)[0]][0]);
     })
 

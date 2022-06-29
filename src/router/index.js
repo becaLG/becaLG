@@ -1,3 +1,4 @@
+import store from '@/store';
 import { createRouter, createWebHistory } from 'vue-router'
 
 const HomeView = () => import( '../views/HomeView.vue');
@@ -8,6 +9,7 @@ const Profile = () => import( '../views/profile/Profile.vue');
 const Shopcart = () => import( '../views/shopcart/Shopcart.vue');
 const Register = () => import('../views/profile/Register.vue');
 const Login = () => import('../views/profile/Login.vue');
+import { Notify, Toast } from 'vant';
 
 const routes = [
   {
@@ -47,7 +49,8 @@ const routes = [
     name: 'Shopcart',
     component: Shopcart,
     meta:{
-      title:'图书兄弟-购物车'
+      title:'图书兄弟-购物车',
+      isAuthRequired:true
     }
   },
   {
@@ -55,7 +58,8 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta:{
-      title:'图书兄弟-个人中心'
+      title:'图书兄弟-个人中心',
+      isAuthRequired:true
     }
   },
   {
@@ -85,6 +89,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to,from,next)=>{
+  if(to.meta.isAuthRequired && store.state.user.isLogin == false){
+    Notify('您还没有登录,请到登录页面登录');
+    return next('/login');
+  }else{
+    next();
+  }
+
   next();
   document.title = to.meta.title;
 })
