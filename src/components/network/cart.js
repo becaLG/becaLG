@@ -11,7 +11,7 @@ export function addCart(data){
 
 export function modifyCart(id,data){
     return request({
-        url:`/api/carts/${cart}`,
+        url:`/api/carts/${id}`,
         method:'put',
         data
     })
