@@ -73,18 +73,16 @@ const routes = [
     meta:{
       title:'图书兄弟-用户登录'
     }
-  },
-  
-  
-  
+  }
 ]
-
+console.log(routes)
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 
 router.beforeEach((to,from,next)=>{
+  console.log(to)
   next();
   document.title = to.meta.title;
 })

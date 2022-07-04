@@ -25,7 +25,7 @@
       </div>
     <div>购物车</div>
     </router-link> 
-    <router-link class="tab-bar-item" to="/profile">
+    <router-link class="tab-bar-item" to="/login">
     <div class="icon"><i class="iconfont">&#xe657;</i></div>
     <div>我的</div>
     </router-link> 
