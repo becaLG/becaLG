@@ -57,6 +57,7 @@ import {login} from '../../components/network/user';
 import { Notify } from 'vant';
 import { Toast } from 'vant';
 import {useRouter} from "vue-router";
+import {useStore} from 'vuex';
 export default {
   name: "Register",
   components: {
@@ -64,6 +65,7 @@ export default {
   },
   setup(){
     const router = useRouter();
+    const store = useStore();
     const userinfo = reactive({
         email:'',
         password:'',
@@ -72,6 +74,7 @@ export default {
         const onSubmit = () =>{
             login(userinfo).then(res=>{
                 window.localStorage.setItem('token',res.access_token);
+                store.commit('setIsLogin',true);
                 Toast.success('登录成功');
                 userinfo.email = '';
                 userinfo.password = '';
