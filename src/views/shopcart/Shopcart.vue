@@ -107,6 +107,7 @@ export default {
         state.list.forEach(item=>{
           if(item.id == detail.name){
             item.num = value;
+            console.log(1)
           }
         })
       })
