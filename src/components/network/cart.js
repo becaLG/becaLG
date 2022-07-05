@@ -35,6 +35,6 @@ export function deleteCartItem(id){
     return request({
         url:`/api/carts/${id}`,
         method:'delete',
-        data
+        
     })
 }

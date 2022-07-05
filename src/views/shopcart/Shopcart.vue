@@ -9,14 +9,14 @@
     </nav-bar>
     <div class="cart-box">
       <div class="cart-body">
-        <van-checkbox-group ref="checkboxGroup">
+        <van-checkbox-group ref="checkboxGroup" @change="groupChange" v-model="result">
           <van-swipe-cell
             :right-width="50"
             v-for="(item,index) in list"
             :key="index"
           >
             <div class="good-item">
-              <van-checkbox name="" />
+              <van-checkbox :name="item.id" />
               <div class="good-img">
                 <img src="../../assets/images/1.jpg" alt="" />
               </div>
@@ -44,13 +44,14 @@
                 icon="delete"
                 type="danger"
                 class="delete-button"
+                @click="deleteGood(item.id)"
               />
             </template>
           </van-swipe-cell>
         </van-checkbox-group>
       </div>
-      <van-submit-bar class="submit-all" :price="9999" button-text="结算">
-        <van-checkbox>全选</van-checkbox>
+      <van-submit-bar class="submit-all" :price="total *100" @submit="onSubmit" button-text="结算">
+        <van-checkbox @click="allCheck" v-model:checked="checkAll">全选</van-checkbox>
       </van-submit-bar>
       <div class="empty" v-if="!list.length">
         <img
@@ -78,7 +79,8 @@ import {
   checkedCard,
   modifyCart,
 } from "../../components/network/cart";
-import { onMounted } from "@vue/runtime-core";
+import { computed, onMounted } from "@vue/runtime-core";
+import { Toast } from 'vant';
 export default {
   name: "Shopcart",
   setup() {
@@ -86,22 +88,61 @@ export default {
     const store = useStore();
     const state = reactive({
       list: [],
+      result:[],
+      checkAll:true
     });
+
+    const groupChange = (result) =>{
+        if(result.length == state.list.length){
+          state.checkAll = true;
+        }else{
+          state.checkAll = false;
+        }
+        state.result = result;
+        checkedCard({cart_ids:result});
+    }
 
     const goTo = () => {
       router.push({ path: "/home" });
     };
+    
+    const deleteGood = (id) =>{
+        deleteCartItem(id).then(res=>{
+          init();
+          store.dispatch('updateCart');
+        })
+    }
+
+    const allCheck = () =>{
+           if(!state.checkAll){
+              state.result = state.list.map(item=>item.id)
+              state.checkAll = true;
+           }else{
+            state.result = [];
+            state.checkAll = false
+           }
+    }
 
     const init = () => {
-      // Toast.loading({ message: "加载中....", forbidClick: true });
+      Toast.loading({ message: "加载中....", forbidClick: true });
       getCart("include=goods").then(res => {
         state.list = res.data;
-        // Toast.clear();
+        state.result= res.data.filter(n=>n.is_checked == 1).map(item => item.id)
+        Toast.clear();
       });
     };
     onMounted(() => {
       init();
     });
+    const total = computed(()=>{
+      let sum =0;
+
+      state.list.filter(item=>state.result.includes(item.id)).forEach(item=>{
+        sum += parseInt(item.num) * parseFloat(item.goods.price);
+      })
+
+      return sum;
+    })
     const onChange = (value,detail) =>{
       modifyCart(detail.name,{num:value}).then(res=>{
         state.list.forEach(item=>{
@@ -112,10 +153,25 @@ export default {
         })
       })
     }
+
+    const onSubmit = () =>{
+      if(state.result.length == 0){
+        Toast.fail("请选择商品进行结算");
+        return
+      }else{
+        router.push({path:'/createorder'});
+      }
+    }
+
     return {
       ...toRefs(state),
       goTo,
-      onChange
+      onChange,
+      groupChange,
+      allCheck,
+      deleteGood,
+      total,
+      onSubmit
     };
   },
   components: {
