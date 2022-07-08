@@ -9,6 +9,8 @@ const Profile = () => import( '../views/profile/Profile.vue');
 const Shopcart = () => import( '../views/shopcart/Shopcart.vue');
 const Register = () => import('../views/profile/Register.vue');
 const Login = () => import('../views/profile/Login.vue');
+const Address = () => import('../views/profile/Address.vue');
+const AddressEdit = () => import('../views/profile/AddressEdit.vue');
 import { Notify, Toast } from 'vant';
 
 const routes = [
@@ -75,7 +77,37 @@ const routes = [
     name: 'Login',
     component: Login,
     meta:{
-      title:'图书兄弟-用户登录'
+      title:'图书兄弟-用户登录',
+      isAuthRequired:true
+    }
+  }
+  ,
+  {
+    path: '/address',
+    name: 'Address',
+    component: Address,
+    meta:{
+      title:'图书兄弟-地址管理',
+      isAuthRequired:true
+    }
+  }
+  ,
+  {
+    path: '/addressedit',
+    name: 'AddressEdit',
+    component: AddressEdit,
+    meta:{
+      title:'图书兄弟-地址编辑',
+      isAuthRequired:true
+    }
+  }
+  ,
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta:{
+      title:'图书兄弟-用户注册'
     }
   }
 ]
