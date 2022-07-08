@@ -11,6 +11,8 @@
       <div>登录名:{{}}</div>
       <div>个性签名:{{}}</div>
     </div>
+    
+    
 
     <div style="margin: 15px; margin-top: 100px">
       <van-button @click="tologout" round block color="#44BA80"
