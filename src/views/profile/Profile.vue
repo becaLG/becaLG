@@ -7,12 +7,18 @@
 
     <div class="Topimg">
       <img src="../../../src/assets/images/1.jpg" alt="" />
-      <div>昵称:{{}}</div>
-      <div>登录名:{{}}</div>
-      <div>个性签名:{{}}</div>
+      <div class="name">昵称:{{}}</div>
+      <div class="toname">登录名:{{}}</div>
+      <div nameqian>个性签名:{{}}</div>
     </div>
-    
-    
+
+    <div class="guanli">
+      <van-cell title="我的收藏" is-link />
+      <van-cell title="我的订单" is-link />
+      <van-cell title="账号管理" is-link />
+      <van-cell @click="$router.push({ path: '/address' })" title="地址管理" is-link />
+      <van-cell title="关于我们" is-link />
+    </div>
 
     <div style="margin: 15px; margin-top: 100px">
       <van-button @click="tologout" round block color="#44BA80"
@@ -24,6 +30,7 @@
 
 <script>
 import NavBar from "../../components/common/NavBar/NavBar.vue";
+import { createApp } from "vue";
 import { logout } from "../../components/network/user";
 import { Toast } from "vant";
 import { useRouter } from "vue-router";
@@ -72,5 +79,22 @@ export default {
     bottom: 25px;
     left: 25px;
   }
+  div {
+    color: white;
+    position: inherit;
+    top: 20px;
+    padding: 10px;
+    right: 30px;
+  }
 }
+.guanli{
+  margin-top: 80px;
+  text-align: left;
+  .van-cell{
+    width: 100%;
+    height: 50px;
+    font-weight: 600;
+  }
+}
+
 </style>
