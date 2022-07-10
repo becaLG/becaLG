@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import NavBar from "../../components/common/NavBar/NavBar.vue"
 import { reactive, toRefs } from '@vue/reactivity'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from '@vue/runtime-core'

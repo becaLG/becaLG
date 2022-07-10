@@ -2,7 +2,7 @@ import { request } from "./request";
 
 //添加地址
 export function addAddress(params){
-    return request({
+    return request({  
         url:'/api/address',
         method:'post',
         params
