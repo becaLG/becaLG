@@ -4037,11 +4037,11 @@ export const tdist={
   tdist.getLev1 = function(){
     for(var t = [],e = 1;e < 100;e++){
       var i = "0000";
-      i = e < 10 ? "0" +e +i:e+i;
+      i = e < 10 ? "0" +e + i : e + i;
       var n = this[i];
       "undefined" != typeof n && t.push({
         id:i,
-        text:n[0]
+        text:n
       })
     }
     return t
@@ -4052,11 +4052,11 @@ export const tdist={
       return [];
     for(var e = [],i = 1;i < 100;i++){
       var n = t.substr(0,2);
-      n += i<10 ? "0" + i +"00":i+"00";
+      n += i<10 ? "0" + i + "00" : i +"00";
       var r= this[n];
       "undefined"!=typeof r && e.push({
         id:n,
-        text:r[0]
+        text:r
       })
     }
     return e
@@ -4071,7 +4071,7 @@ export const tdist={
       var r = this[n];
       "undefined" != typeof r && e.push({
         id:n,
-        text:r[0]
+        text:r
       })
     }
     return e

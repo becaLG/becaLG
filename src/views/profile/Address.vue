@@ -17,7 +17,6 @@
             default-tag-text="默认"
             @add="onAdd"
             @edit="onEdit"
-            @select="select"
             />
 
             
@@ -31,6 +30,7 @@ import NavBar from "../../components/common/NavBar/NavBar.vue"
 import { reactive, toRefs } from '@vue/reactivity'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from '@vue/runtime-core'
+import { getAddressList } from '../../components/network/address'
 
 export default {
     components:{
@@ -45,7 +45,22 @@ export default {
         })
 
         onMounted(()=>{
+            getAddressList().then(res=>{
+                if(res.data.length == 0){
+                    state.list = [];
+                    return;
+                }
 
+                state.list = res.data.map(item=>{
+                    return{
+                        id:item.id,
+                        name:item.name,
+                        tel:item.phone,
+                        address:`${item.province} ${item.city} ${item.county} ${item.address}`,
+                        isDefault:!!item.is_default
+                    }
+                });
+            })
         })
 
         const onAdd = () =>{
@@ -63,8 +78,7 @@ export default {
         return {
             ...toRefs(state),
             onAdd,
-            onEdit,
-            select
+            onEdit
         }
     }
 }
