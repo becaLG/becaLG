@@ -1,14 +1,14 @@
 <template>
   <div class="address-edit-box">
     <nav-bar class="nav-bar">
-      <template v-slot:default> 新增地址 </template>
+      <template v-slot:default> {{title}} </template>
     </nav-bar>
 
     <van-address-edit
       class="edit"
       :area-list="areaList"
       :address-info="addressInfo"
-      :show-delete="false"
+      :show-delete="type == 'edit'"
       show-set-default
       show-search-result
       :search-result="searchResult"
@@ -32,7 +32,7 @@ import {
 import { ref } from "vue";
 import { Toast } from "vant";
 import NavBar from "../../components/common/NavBar/NavBar.vue";
-import { reactive, toRefs } from "@vue/reactivity";
+import { reactive, toRefs,computed } from "@vue/reactivity";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted } from "@vue/runtime-core";
 import { isDate } from "vant/lib/utils";
@@ -52,6 +52,9 @@ export default {
       },
       searchResult: [],
       addressInfo: {},
+      type:'add',
+      addressId:'',
+      title:''
     });
 
     onMounted(() => {
@@ -72,7 +75,46 @@ export default {
       state.areaList.province_list = _province_list;
       state.areaList.city_list = _city_list;
       state.areaList.county_list = _county_list;
+      const {type,addressId} = route.query;
+      state.type = type;
+      state.addressId = addressId;
+      
+      if(type == 'edit'){
+        getAddressDetail(addressId).then(res=>{
+          const addressDetail = res;
+
+          let _areaCode = ''
+          const province = tdist.getLev1();
+
+
+          Object.entries(state.areaList.county_list).forEach(([id,text])=>{
+            if(text == addressDetail.county){
+              const provinceIndex = province.findIndex(item=>item.id.substr(0,2) == id.substr(0,2) == id.substr(0,2))
+              const cityItem = Object.entries(state.areaList.city_list).filter(([cityId,city])=> cityId.substr(0,4) == id.substr(0,4))
+              if(province[provinceIndex].text == addressDetail.province && cityItem[1] == addressDetail.city){
+                _areaCode = id
+              }
+            }
+          })
+
+          state.addressInfo = {
+            name:addressDetail.name,
+            tel:addressDetail.phone,
+            province:addressDetail.province,
+            city:addressDetail.city,
+            county:addressDetail.county,
+            areaCode:_areaCode,
+            addressDetail:addressDetail.address,
+            isDefault:!!addressDetail.is_default
+          }
+        })
+      }
+
+
     });
+    const title = computed(()=>{
+      return state.type == 'add' ? '新增地址' : '编辑地址';
+    })
 
     const onSave = (content) => {
       const params = {
@@ -82,21 +124,36 @@ export default {
         city: content.city,
         county: content.county,
         address: content.addressDetail,
-        is_default: content.is_default ? 1 : 0,
+        is_default: content.isDefault ? 1 : 0,
       };
-      addAddress(params);
+
+      if(state.type == 'edit'){
+         EditAddress(state.addressId,params)
+      }else if(state.type == 'add'){
+         addAddress(params);
+      }
+
       Toast("保存成功");
       setTimeout(() => {
         router.back();
       }, 1000);
     };
 
-    const onDelete = () => {};
+    const onDelete = () => {
+      DeleteAddress(state.addressId).then(res=>{
+        Toast("删除成功");
+      setTimeout(() => {
+        router.back();
+      }, 1000);
+      })
+
+    };
 
     return {
       ...toRefs(state),
       onSave,
       onDelete,
+      title
     };
   },
 };
