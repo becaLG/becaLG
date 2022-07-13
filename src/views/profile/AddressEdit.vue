@@ -91,7 +91,7 @@ export default {
             if(text == addressDetail.county){
               const provinceIndex = province.findIndex(item=>item.id.substr(0,2) == id.substr(0,2) == id.substr(0,2))
               const cityItem = Object.entries(state.areaList.city_list).filter(([cityId,city])=> cityId.substr(0,4) == id.substr(0,4))
-              if(province[provinceIndex].text == addressDetail.province && cityItem[1] == addressDetail.city){
+              if(province[provinceIndex] == addressDetail.province && cityItem[1] == addressDetail.city){
                 _areaCode = id
               }
             }
