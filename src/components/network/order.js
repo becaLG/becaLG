@@ -41,7 +41,7 @@ export function getOrderList(params){
 }
 
 //订单详情
-export function createOrder(params){
+export function getOrderDetail(order){
     return request({
         url:`/api/orders/${order}`,
         params:{

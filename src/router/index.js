@@ -11,6 +11,7 @@ const Register = () => import('../views/profile/Register.vue');
 const Login = () => import('../views/profile/Login.vue');
 const Address = () => import('../views/profile/Address.vue');
 const AddressEdit = () => import('../views/profile/AddressEdit.vue');
+const CreateOrder = () => import('../views/order/CreateOrder');
 import { Notify, Toast } from 'vant';
 
 const routes = [
@@ -109,7 +110,16 @@ const routes = [
     meta:{
       title:'图书兄弟-用户注册'
     }
-  }
+  },
+  {
+    path: '/createorder',
+    name: 'CreateOrder',
+    component: CreateOrder,
+    meta:{
+      title:'图书兄弟-订单预览'
+    }
+  },
+  
 ]
 console.log(routes)
 const router = createRouter({
