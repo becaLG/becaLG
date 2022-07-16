@@ -25,11 +25,19 @@ export function request(config){
         // console.log(res)
         return res.data ? res.data : res;
     },err=>{
-        if(err.response.status == '401'){
-            Toast.fail('请先登录');
-            router.push({path:'/login'});
+        if(err?.response){
+            if(err?.response?.status == '401'){
+                Toast.fail('请先登录');
+                router.push({path:'/login'});
+            }
+    
+            if(err?.response?.status == '400'){
+                Toast.fail(err.response.data.message);
+                return false;
+            }
+    
+            Notify(err.response.data.errors[Object.keys(err.response.data.errors)[0]][0]);
         }
-        Notify(err.response.data.errors[Object.keys(err.response.data.errors)[0]][0]);
     })
 
     return instance(config);

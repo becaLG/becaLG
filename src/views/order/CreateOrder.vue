@@ -61,17 +61,27 @@
             微信支付
         </van-button>
     </div> -->
-      <van-grid :border="false" :column-num="2">
+    <div class="payDialog">
+      <div>
+        支付宝二维码<br />
+          <van-image width="150" height="150" :src="aliyun" />
+      </div>
+      <div>
+        微信二维码<br />
+          <van-image width="150" height="150" :src="wechat" />
+      </div>
+    </div>
+      <!-- <van-grid :border="false" direction="horizontal" class="payDialog">
         <van-grid-item>
           支付宝二维码<br />
-          <van-image width="150" height="150" :src="aliyun" />
+          <van-image width="120" height="120" :src="aliyun" />
         </van-grid-item>
 
         <van-grid-item>
           微信二维码<br />
-          <van-image width="150" height="150" :src="wechat" />
+          <van-image width="120" height="120" :src="wechat" />
         </van-grid-item>
-      </van-grid>
+      </van-grid> -->
     </van-popup>
   </div>
 </template>
@@ -140,7 +150,7 @@ export default {
 
       createOrder(params).then((res) => {
         Toast("创建订单成功");
-        stroe.dispatch("upadteCart");
+        store.dispatch("upadteCart");
 
         state.showPay = true;
 
@@ -159,14 +169,17 @@ export default {
           payOrderStatus(state.orderNo).then(res=>{
             if(res =='2'){
                 clearInterval(timer);
-                router.push({path:'/order',query:{status:2}})
+                router.push({path:'/orderdetail',query:{id:state.orderNo}})
             }
           }) 
         }, 2000);
       });
     };
 
-    const close = () => {};
+    const close = () => {
+          router.push({path:'/orderdetail',query:{id:state.orderNo}})
+
+    };
     const total = computed(() => {
       let sum = 0;
       state.cartList.forEach((item) => {
@@ -304,5 +317,11 @@ export default {
 .submit-all {
   margin-bottom: 50px;
   z-index: 9 !important;
+}
+.payDialog{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  padding: 20px;
 }
 </style>
