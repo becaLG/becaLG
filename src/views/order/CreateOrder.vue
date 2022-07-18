@@ -150,7 +150,7 @@ export default {
 
       createOrder(params).then((res) => {
         Toast("创建订单成功");
-        store.dispatch("upadteCart");
+        store.dispatch("updateCart");
 
         state.showPay = true;
 
