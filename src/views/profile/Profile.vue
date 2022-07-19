@@ -14,7 +14,7 @@
 
     <div class="guanli">
       <van-cell title="我的收藏" is-link />
-      <van-cell title="我的订单" is-link />
+      <van-cell @click="$router.push({ path: '/order' })" title="我的订单" is-link />
       <van-cell title="账号管理" is-link />
       <van-cell @click="$router.push({ path: '/address' })" title="地址管理" is-link />
       <van-cell title="关于我们" is-link />
