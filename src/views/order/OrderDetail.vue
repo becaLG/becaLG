@@ -1,6 +1,6 @@
 <template>
   <div class="order-detail-box">
-    <nav-bar class="nav-bar">
+    <nav-bar>
       <template v-slot:default> 订单详情 </template>
     </nav-bar>
 
@@ -26,7 +26,7 @@
         block
         >去支付</van-button
       >
-      <van-button v-if="detail.status == 2" block @click="handleConfirmOrder">确认订单</van-button>
+      <van-button block @click="handleConfirmOrder" class="asd">确认订单</van-button>
     </div>
 
     <div class="order-price">
@@ -51,7 +51,10 @@
       :thumb="item.goods.cover_url"
     />
 
-    <div style="width: 100%; height: 50px"></div>
+    <div style="width: 100%; height: 50px">
+
+
+    </div>
 
     <van-popup
       v-model:show="showPay"
@@ -83,7 +86,7 @@
 </template>
 
 <script>
-import { NavBar } from "../../components/common/NavBar/NavBar.vue";
+import NavBar from "../../components/common/NavBar/NavBar.vue";
 import { reactive, toRefs } from "@vue/reactivity";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted } from "@vue/runtime-core";
@@ -194,3 +197,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.order-detail-box{
+  text-align: left;
+  background: #f7f7f7;
+  .order-status{
+    background: #fff;
+    margin-top: 44px;
+    padding: 20px;
+    font-size: 15px;
+    .status-item{
+      margin-bottom: 10px;
+    }
+  }
+}
+.order-price{
+  background: #fff;
+  height: 100px;
+  line-height: 35px;
+  padding: 10px;
+}
+
+</style>

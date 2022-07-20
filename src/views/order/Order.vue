@@ -4,14 +4,14 @@
       <template v-slot:default> 订单列表</template>
     </nav-bar>
 
-    <van-tabs ref="tabs" class="order-tab">
+    <!-- <van-tabs ref="tabs" class="order-tab">
       <van-tab title="全部"></van-tab>
       <van-tab title="待付款"></van-tab>
       <van-tab title="已支付"></van-tab>
       <van-tab title="发货"></van-tab>
       <van-tab title="交易完成"></van-tab>
       <van-tab title="已过期"></van-tab>
-    </van-tabs>
+    </van-tabs> -->
 
     <van-tabs @click="onChangeTab" ref="tabs" class="order-tab">
       <van-tab title="全部"></van-tab>
@@ -155,4 +155,7 @@ export default {
 </script>
 
 <style scoped>
+.order-tab{
+    margin-top: 40px;
+}
 </style>
