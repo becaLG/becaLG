@@ -13,6 +13,8 @@ const Address = () => import('../views/profile/Address.vue');
 const AddressEdit = () => import('../views/profile/AddressEdit.vue');
 const CreateOrder = () => import('../views/order/CreateOrder');
 const Order = () => import('../views/order/Order');
+const OrderDetail = () => import('../views/order/OrderDetail.vue');
+
 import { Notify, Toast } from 'vant';
 
 const routes = [
@@ -126,6 +128,14 @@ const routes = [
     component: Order,
     meta:{
       title:'图书兄弟-订单列表'
+    }
+  },
+  {
+    path: '/orderdetail',
+    name: 'OrderDetail',
+    component: OrderDetail,
+    meta:{
+      title:'图书兄弟-订单'
     }
   },
   

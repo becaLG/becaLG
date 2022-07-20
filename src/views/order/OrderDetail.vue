@@ -42,7 +42,7 @@
     </div>
 
     <van-cart
-      v-for="item in detail.orderDetails.data"
+      v-for="item in list"
       :key="item.id"
       :num="item.num"
       :price="item.price + '.00'"
@@ -90,7 +90,7 @@ import { computed, onMounted } from "@vue/runtime-core";
 import { Dialog, Toast } from "vant";
 import { confirmOrder, getOrderDetail, payOrder } from "../../components/network/order";
 export default {
-  name: OrderDetail,
+  name: 'OrderDetail',
   components: {
     NavBar,
   },
@@ -115,7 +115,8 @@ export default {
       state.orderNo = id;
 
       getOrderDetail(id).then((res) => {
-        state.detai = res;
+        // state.detail = res;
+        Object.assign(state.detail,res);
       });
     };
 
@@ -133,12 +134,16 @@ export default {
     const total = computed(() => {
       let sum = 0;
 
-      state.detail,
-        OrderDetails.data.forEach((item) => {
+      state.detail.OrderDetails.date.forEach((item) => {
           sum += item.num * item.price;
         });
 
       return sum;
+    });
+
+    const list = computed(() => {
+      console.log(state.detail.OrderDetails.date)
+      return state.detail.OrderDetails.date;
     });
 
     const showPayFn = () => {
@@ -179,6 +184,7 @@ export default {
 
     return {
       ...toRefs(state),
+      list,
       statusString,
       total,
       showPayFn,
