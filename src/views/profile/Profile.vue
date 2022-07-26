@@ -18,6 +18,7 @@
       <van-cell title="账号管理" is-link />
       <van-cell @click="$router.push({ path: '/address' })" title="地址管理" is-link />
       <van-cell title="关于我们" is-link />
+      <van-cell @click="$router.push({ path: '/zuoye' })" title="作业" is-link />
     </div>
 
     <div style="margin: 15px; margin-top: 100px">
