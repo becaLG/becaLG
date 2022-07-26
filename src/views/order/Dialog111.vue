@@ -3,7 +3,7 @@
     <div class="one">
       <button class="onebuttone" @click="dianji">click to open the Dialog</button>
       <div class="tanchuangone">
-         <div class="qiantaoone" v-show="false">
+         <div class="qiantaoone" v-show="this.abc">
           <div class="zhongwenzitwo">Are you sure to close this dialog?</div>
           <button class="Cancel" @click="cancel">Cancel</button>
           <button class="OK" @click="OK">OK</button>
@@ -55,7 +55,7 @@ export default {
       this.asd = !this.asd;
     },
     cha(){
-      this.abc = true;
+      this.abc = !this.abc;
       this.asd = !this.asd;
     },
     cancel(){
@@ -119,7 +119,7 @@ export default {
   background: red;
 }
 .tanchuangone{
-  width: 465px;
+  width: 380px;
   height: 200px;
   background: #FFFFFF;
   position: absolute;
@@ -180,7 +180,7 @@ export default {
 }
 .onex{
   position: absolute;
-  left: 410px;
+  left: 335px;
   bottom: 5px;
   font-size: 13px;
   color: #606266;

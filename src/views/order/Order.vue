@@ -61,6 +61,9 @@
         </van-list>
       </van-pull-refresh>
     </div>
+    <myDialog>
+      这是弹窗内容
+    </myDialog>
   </div>
 </template>
 
@@ -70,11 +73,13 @@ import { reactive, ref, toRefs, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import NavBar from "../../components/common/NavBar/NavBar.vue";
 import { getOrderList } from "../../components/network/order";
+import myDialog from '@/views/order/Dialog.vue'
 
 export default {
   name: "Order",
   components: {
     NavBar,
+    myDialog
   },
   setup() {
     const router = useRouter();
