@@ -76,7 +76,6 @@ const onelithree =(index)=>{
         if(index == i){
             onearr.onearrvalue = onearr.oneboxvalue[i+1]+"/" + onearr.oneli[i]+"/" + onearr.onelione[i]
         }
-        console.log(1)
     })
 }
 </script>
